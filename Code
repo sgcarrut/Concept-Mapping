@@ -1,6 +1,6 @@
 #Create Data Pathway
 setwd("S:/Indiana Research & Evaluation/CCPE/Concept Mapping/Data/Participant Sorting Sheets")
-#Import Participant Matricies
+#Import Participant Matricie
 Sub1 = read.csv("Sub1.csv", header = FALSE)
 Sub2 = read.csv("Sub2.csv", header = FALSE)
 Sub3 = read.csv("Sub3.csv", header = FALSE)
