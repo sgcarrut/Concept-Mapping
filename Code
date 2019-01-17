@@ -1,19 +1,36 @@
+Concept Mapping
 
----
-title: "ConceptMapping"
-output: html_document
----
+#Create Data Pathway
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-Load data section
-```{r}
-setwd("S:/Indiana Research & Evaluation/CCPE/Concept Mapping/Data/Participant Sorting Sheets)
+setwd("S:/Indiana Research & Evaluation/CCPE/Concept Mapping/Data/Participant Sorting Sheets")
+
+#Import Participant Matrix
+
 Sub1 = read.csv("Sub1.csv", header = FALSE)
-Sub2 = read.csv("Sub2.csv", header =FALSE)
-head(Sub1)
-Sub1+Sub2
+Sub2 = read.csv("Sub2.csv", header = FALSE)
+Sub3 = read.csv("Sub3.csv", header = FALSE)
+Sub4 = read.csv("Sub4.csv", header = FALSE)
+Sub5 = read.csv("Sub5.csv", header = FALSE)
+Sub6 = read.csv("Sub6.csv", header = FALSE)
+Sub7 = read.csv("Sub7.csv", header = FALSE)
+Sub8 = read.csv("Sub8.csv", header = FALSE)
+Sub9 = read.csv("Sub9.csv", header = FALSE)
+Sub10 = read.csv("Sub10.csv", header = FALSE)
+Sub11 = read.csv("Sub11.csv", header = FALSE)
+Sub12 = read.csv("Sub12.csv", header = FALSE)
+Sub13 = read.csv("Sub13.csv", header = FALSE)
+Sub14 = read.csv("Sub14.csv", header = FALSE)
+Sub15 = read.csv("Sub15.csv", header = FALSE)
+Sub16 = read.csv("Sub16.csv", header = FALSE)
+Sub17 = read.csv("Sub17.csv", header = FALSE)
+Sub18 = read.csv("Sub18.csv", header = FALSE)
+Sub19 = read.csv("Sub19.csv", header = FALSE)
+Sub20 = read.csv("Sub20.csv", header = FALSE)
+Sub21 = read.csv("Sub21.csv", header = FALSE)
+Sub22 = read.csv("Sub22.csv", header = FALSE)
+Sub24 = read.csv("Sub24.csv", header = FALSE)
 
-```
+#Create Aggregate Matrix
 
+Sub.Aggregate = Sub1 + Sub2 + Sub3 + Sub4 + Sub5 + Sub6 + Sub7 + Sub8 + Sub9 + Sub10 + Sub11 + Sub12 + Sub13 + Sub14 + Sub15 + Sub16 + Sub17 + Sub18 + Sub19 + Sub20 + Sub21 + Sub22 + Sub24
+head(Sub.Aggregate)
