@@ -1,0 +1,19 @@
+
+---
+title: "ConceptMapping"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Load data section
+```{r}
+setwd("S:/Indiana Research & Evaluation/CCPE/Concept Mapping/Data/Participant Sorting Sheets)
+Sub1 = read.csv("Sub1.csv", header = FALSE)
+Sub2 = read.csv("Sub2.csv", header =FALSE)
+head(Sub1)
+Sub1+Sub2
+
+```
+
