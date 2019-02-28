@@ -50,6 +50,8 @@ hcWard$ac
 hcC$ac
 hcWeighted$ac
 
+plot(hcWard, main = "Dendrogram Viability")
+
 #Begin Clustering
 hcTree = cutree(hcWard, k=8)
 Sub.Aggregate %>%
