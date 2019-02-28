@@ -62,6 +62,9 @@ fviz_nbclust(Sub.Aggregate, FUN = hcut, method = "wss")
 
 #Average Silouette Method -- Indicates 8 clusters I believe
 fviz_nbclust(Sub.Aggregate, FUN = hcut, method = "silhouette")
+fviz_nbclust(Sub.Aggregate, FUN = hcut, method = "gap_stat")
+
+
 
 #Gap Cluster Method -- Indicates 9 clusters I believe
 gap_stat = clusGap(Sub.Aggregate, FUN = hcut, nstart = 25, K.max = 10, B = 10)
