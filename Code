@@ -24,15 +24,18 @@ Sub20 = read.csv("Sub20.csv", header = FALSE)
 Sub21 = read.csv("Sub21.csv", header = FALSE)
 Sub22 = read.csv("Sub22.csv", header = FALSE)
 Sub24 = read.csv("Sub24.csv", header = FALSE)
+
 #Create Aggregate Matrix
 Sub.Aggregate = Sub1 + Sub2 + Sub3 + Sub4 + Sub5 + Sub6 + Sub7 + Sub8 + Sub9 + Sub10 + Sub11 + Sub12 + Sub13 + Sub14 + Sub15 + Sub16 + Sub17 + Sub18 + Sub19 + Sub20 + Sub21 + Sub22 + Sub24
 head(Sub.Aggregate)
+
 #Export New Dataset
 write.csv(Sub.Aggregate, "Sub_Aggregate_Data.csv")
 
-#Begin following directions from RPubs Document
+#Import New Dataset (Excluded column with participant Number)
+Sub.Aggregate = read.csv("Sub_Aggregate_Data1.csv", header = TRUE)
 
-#Load in all needed packages
+#Install and Load Packages
 install.packages("factoextra")
 library(factoextra)
 library(MASS)
@@ -41,36 +44,48 @@ library(ggpubr)
 install.packages("tidyverse")
 library(tidyverse)
 
-#Agglomerative Clustering
-hcWard = agnes(Sub.Aggregate, diss = FALSE, stand = TRUE, method = "ward")
-hcC = agnes(Sub.Aggregate, diss = FALSE, stand = TRUE, method = "complete")
-hcWeighted = agnes(Sub.Aggregate, diss = FALSE, stand = TRUE, method = "weighted")
+#Identify Appropriate Method for Cluster Creation
+hcWard = agnes(Sub.Aggregate, diss = FALSE, stand = FALSE, method = "ward")
+hcC = agnes(Sub.Aggregate, diss = FALSE, stand = FALSE, method = "complete")
+hcWeighted = agnes(Sub.Aggregate, diss = FALSE, stand = FALSE, method = "weighted")
 
-#Agglomerative Clustering Outputs -- hcWard was highest at 0.89
 hcWard$ac
 hcC$ac
 hcWeighted$ac
 
-#Begin Clustering
-hcTree = cutree(hcWard, k=3)
+#Identify Appropriate Number of CLusters
+fviz_nbclust(Sub.Aggregate, FUN = hcut, method = "wss")
+
+fviz_nbclust(Sub.Aggregate, FUN = hcut, method = "silhouette")
+
+gap_stat = clusGap(Sub.Aggregate, FUN = hcut, K.max = 10, B = 100)
+fviz_gap_stat(gap_stat)
+
+#Create 8 Cluster Divisions
+hcTree = cutree(hcWard, k=8)
 Sub.Aggregate %>%
   mutate(cluster = hcTree)
 
-#Elbow Method -- Unsure what it suggests
-fviz_nbclust(Sub.Aggregate, FUN = hcut, method = "wss")
+#Create Dataset with Cluster Designation
+head(Sub.Aggregate)
+Sub.AggregateTest = data.frame(Sub.Aggregate, hcTree)
+head(Sub.AggregateTest)
 
-#Average Silouette Method -- Indicates 8 clusters I believe
-fviz_nbclust(Sub.Aggregate, FUN = hcut, method = "silhouette")
+#Create 8 Cluster Map
+library(prettyR)
+library(Hmisc)
+library(pastecs)
+library(tidyr)
+library(readr)
 
-#Gap Cluster Method -- Indicates 9 clusters I believe
-gap_stat = clusGap(Sub.Aggregate, FUN = hcut, nstart = 25, K.max = 10, B = 10)
-fviz_gap_stat(gap_stat)
+ClusterMap = fviz_cluster(list(data = Sub.Aggregate, cluster = hcTree), main = "Cluster of Barriers to Program Implementation", repel = TRUE, ellipse.alpha = 0.05, axes = c(1,2), geom = "point", xlab = FALSE, ylab = FALSE, show.clust.cent = F) +
+  labs(fill = "Cluster", shape = "Cluster", color = "Cluster")
+ClusterMap
 
-#Creating 8 Cluster Breaks
-hcTree2 = cutree(hcWard, k = 8)
+ClusterMap2 = ClusterMap + 
+  geom_text_repel(label = row.names(Sub.AggregateTest), point.padding = 0.5, size = 3.5) +
+  theme_light() +
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank())
+ClusterMap2
 
-#Creating 9 Cluster Breaks
-hcTree = cutree(hcWard, k = 9)
-
-#Dimensional Map with 8 Clusters
-fviz_cluster(list(data = Sub.Aggregate, cluster = hcTree2))
+describe(hcTree)
